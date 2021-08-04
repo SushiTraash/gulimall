@@ -1,6 +1,7 @@
 package com.atguigu.gulimall.product.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,15 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+
+    /***
+     * 查出分类树
+     */
+    @RequestMapping("/list/tree")
+    public R LIST(){
+        List<CategoryEntity> entityList = categoryService.listWithTree();
+        return R.ok().put("page",entityList);
+    }
     /**
      * 列表
      */
@@ -76,8 +86,8 @@ public class CategoryController {
      */
     @RequestMapping("/delete")
     public R delete(@RequestBody Long[] catIds){
-		categoryService.removeByIds(Arrays.asList(catIds));
-
+		//categoryService.removeByIds(Arrays.asList(catIds));
+		categoryService.removeMenusByIds(Arrays.asList(catIds));
         return R.ok();
     }
 

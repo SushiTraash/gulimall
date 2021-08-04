@@ -3,6 +3,7 @@ package com.atguigu.gulimall.product;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /***
  * 整合mybatis
@@ -15,8 +16,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  *          配置mybatis
  *              使用@mapperscan
  *              设置sql 映射文件位置
+*   逻辑删除
+ *      配置全局 逻辑删除规则
+ *      添加逻辑删除注解@TableLogic
  */
 @MapperScan("com.atguigu.gulimall.product.dao")
+@EnableDiscoveryClient
 @SpringBootApplication
 public class GulimallProductApplication {
 

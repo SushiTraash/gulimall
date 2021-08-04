@@ -1,0 +1,31 @@
+spring:
+
+  cloud:
+
+    gateway:
+      routes:
+        - id: gg_route
+          uri: https://www.google.com
+          predicates:
+            - Query=url,google
+        - id: ph_route
+          uri: https://pornhub.com
+          predicates:
+            - Query=url,pornhub
+
+        - id: product_route
+          uri: lb://gulimall-product
+          predicates:
+            - Path=/api/product/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+          ### http://localhost:88/api/product/category/list/tree  ---->  http://localhost:11000/product/category/list/tree
+
+        - id: admin_route
+          uri: lb://renren-fast # 从注册中心获取服务
+          predicates:
+            - Path=/api/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/renren-fast/$\{segment}
+            ###前端项目请求带上/api/前缀
+            ### localhost:88/api/captcha.jpg  ---->  localhost:8080/renren-fast/captcha.jpg
